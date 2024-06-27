@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Master Control | Bolt IoT</title>
+  <style>
+html,
+body,
+button,
+
+body {
+    background-color: #fff;
+	font-family: sans-serif;
+	text-align: center;
+}
+
+h1 {
+    color: #555;
+	margin: 0;
+    margin-top: 10px;
+	padding: 0;
+	text-transform: uppercase;
+}
+
+h3{
+    color: #555;
+    text-align:center;
+	text-transform: uppercase;
+}
+.btn {
+	width: 120px;
+	height: 40px;
+	font-size: 15px;
+	padding: 5px 10px;
+	text-transform: capitalize;
+	border: none;
+	outline: none;
+	background: transparent;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+	transition: all 0.5s ease;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.btn:hover {
+	box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.img {
+
+}
+
+
+
+.purple {
+	margin-top: 0;
+	border: 1px solid #673ab7;
+	color: #607d8b;
+}
+
+.purple-selected {
+	background-color: #673ab7;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+	color: #fff;
+}
+
+.btn-fluid {
+    padding-top:10px;
+	margin-top: 25px;
+    height: 30px;
+	width: 100%;
+	border: 1px solid #673ab7;
+	color: #607d8b;
+	border-radius: 5px;
+}
+.btn-fluid2 {
+    height: 50px;
+	width: 25%;
+	border-radius: 5px;
+	
+	
+}
+  </style>
+</head>
+<body>
+        <h1> Master Control </h1>
+        <hr>
+        <h3 class="btn-fluid ">Bulb</h3>
+		<button class="btn purple btn-fluid2 bulbOn">ON</button>
+		<button class="btn purple btn-fluid2 bulbOff">OFF</button>
+        <h3 class="btn-fluid ">Fan</h3>
+		<button class="btn purple btn-fluid2 fanOn">ON</button>
+		<button class="btn purple btn-fluid2 fanOff">OFF</button>
+        <h3 class="btn-fluid ">Socket</h3>
+		<button class="btn purple btn-fluid2 socketOn">ON</button>
+		<button class="btn purple btn-fluid2 socketOff">OFF</button>
+		<!--<img class="img" src="https://cdn.tindiemedia.com/images/resize/17bbEpeSSCBhjWs86GcnM9Tm1wY=/p/125x125/i/841311/profiles/2018-06-12T08%3A17%3A33.417Z-Bolt_IoT_GreenGray_vertical.png" alt="Bolt IoT" />-->
+
+<script type="text/javascript" src="https://cloud.boltiot.com/static/js/boltCommands.js"></script>
+<script>
+
+var apiKey = 'your api key here';
+var devName = 'your device name here';
+var bulbPin = 1;
+var fanPin = 2;
+var socketPin = 3;
+
+
+var bulbOn = document.querySelector('.bulbOn');
+var bulbOff = document.querySelector('.bulbOff');
+var btnCount=0;
+var fanOn = document.querySelector('.fanOn');
+var fanOff = document.querySelector('.fanOff');
+var socketOn = document.querySelector('.socketOn');
+var socketOff = document.querySelector('.socketOff');
+setKey(apiKey,devName);
+
+bulbOn.classList.add('purple-selected');
+fanOn.classList.add('purple-selected');
+socketOn.classList.add('purple-selected');
+
+function btnClick(){
+// On 20 request allowed in BoltIOT per Min
+if (btnCount>=16){
+alert("Exceeded No of Click");
+btnCount=0;
+}
+else{
+btnCount++;
+}
+}
+
+
+bulbOn.addEventListener('click', () => {
+  btnClick();
+  bulbOn.classList.add('purple-selected');
+  bulbOff.classList.remove('purple-selected');
+  digitalWrite(bulbPin, 'HIGH');
+
+});
+
+bulbOff.addEventListener('click', () => {
+  btnClick();
+  bulbOn.classList.remove('purple-selected');
+  bulbOff.classList.add('purple-selected');
+  digitalWrite(bulbPin, 'LOW');
+  
+  
+});
+
+fanOn.addEventListener('click', () => {
+  btnClick();
+  fanOn.classList.add('purple-selected');
+  fanOff.classList.remove('purple-selected');
+  digitalWrite(fanPin, 'HIGH');
+ 
+});
+
+fanOff.addEventListener('click', () => {
+  btnClick();
+  fanOn.classList.remove('purple-selected');
+  fanOff.classList.add('purple-selected');
+  digitalWrite(fanPin, 'LOW');
+  
+});
+
+socketOn.addEventListener('click', () => {
+ btnClick();
+  socketOn.classList.add('purple-selected');
+ socketOff.classList.remove('purple-selected');
+  digitalWrite(socketPin, 'HIGH');
+  
+});
+
+socketOff.addEventListener('click', () => {
+  btnClick();
+  socketOn.classList.remove('purple-selected');
+  socketOff.classList.add('purple-selected');
+  digitalWrite(socketPin, 'LOW');
+  
+});
+
+  </script>
+</body>
+
+</html>
